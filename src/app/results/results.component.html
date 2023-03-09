@@ -1,0 +1,31 @@
+<div class="wrap">
+    <div class="container">
+        <hgroup class="mb20 searchHeader">
+            <h1>Search Results</h1>
+            <h2 class="lead"><strong class="text-danger">{{ dataLength }}</strong> results were found</h2>
+        </hgroup>
+
+        <section class="col-xs-12 col-sm-6 col-md-12">
+            <article class="search-result row" *ngFor="let r of searchResults | orderBy: '-jobPostingDate'">
+                <div class="col-xs-12 col-sm-12 col-md-3">
+                    <a href="#" title="Lorem ipsum" class="thumbnail">
+                        <img *ngIf="r.jobImage == null" src="images/default_picture.png" class="searchPicture" />
+			            <img *ngIf="r.jobImage != null" src="{{ r.jobImage }}" class="searchPicture" />
+                    </a>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-2">
+                    <ul class="meta-search">
+                        <li><ng-icon name="bootstrapClock"></ng-icon> <span>{{ r.jobPostingDate | timeAgo }}</span></li>
+                        <li><ng-icon name="bootstrapPinAngleFill"></ng-icon> <span>{{ r.jobCategory }}</span></li>
+                    </ul>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-7 excerpet">
+                    <h3><a href (click)="openListing(r.id)">{{ r.jobTitle }}</a></h3>
+                    <p>{{ r.jobDescription }}</p>
+                    <span class="plus"><a href title="Lorem ipsum" (click)="openListing(r.id)"><ng-icon name="bootstrapPlus"></ng-icon></a></span>
+                </div>
+                <span class="clearfix borda"></span>
+            </article>
+        </section>
+    </div>
+</div>
