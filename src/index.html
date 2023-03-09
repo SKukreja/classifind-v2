@@ -1,0 +1,28 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Classifind</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css'>
+	<base href="/">
+</head>
+
+<body ng-app="classifindApp">
+	<div id='main'>
+
+
+		<div id="search" ng-controller="searchController">
+			<button type="button" class="close">×</button>
+			<form ng-submit="showResults(searchQuery)">
+				<input type="search" value="" placeholder="type keyword(s) here" ng-model="searchQuery" />
+				<button type="submit" class="btn btn-primary" ng-click="search()">Search</button>
+			</form>
+		</div>
+
+		<app-root id="container"></app-root>
+	</div>
+	<footer>
+		<div class="copyright">©2023 Classifind</div>
+	</footer>
+</body>
+</html>

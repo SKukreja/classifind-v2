@@ -1,0 +1,50 @@
+<nav class="navbar navbar-inverse" ng-controller="loginController">
+    <div class="container nav-container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-2">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand " href="/"><img id="logo" src="../assets/images/logo-small.png"></a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-collapse-2">
+            <ul class="nav navbar-nav navbar-right" id="mainmenu">
+                <li class="navmenu" *ngIf="loggedIn"><a href (click)="profile()"><span class="glyphicon glyphicon-user icon mobile"></span><br class="iconline mobile">Dashboard</a></li>
+                <li class="navmenu"><a href (click)="getJobs()"><span class="glyphicon glyphicon-pushpin icon mobile"></span><br class="iconline mobile">Listings</a></li>
+                <li class="navmenu"><a href="#search"><span class="glyphicon glyphicon-search icon mobile"></span><br class="iconline mobile">Search</a></li>
+                <li>
+                    <a class="btn btn-default btn-outline btn-circle collapsed" data-toggle="collapse" href="#login-collapse" id="loginToggle"
+                    aria-expanded="false" aria-controls="login-collapse"><span *ngIf="loggedOut">Sign in</span><span *ngIf="loggedIn">Account</span></a>
+                </li>
+            </ul>
+            <div class="collapse nav navbar-nav nav-collapse slide-down" id="login-collapse">
+                <form class="navbar-form navbar-right form-inline" role="form" *ngIf="loggedOut">
+                    <div class="form-group">
+                        <label class="sr-only" for="Email">Email</label>
+                        <input type="email" class="form-control" id="Email" placeholder="Email" [(ngModel)]="user.email" autofocus required />
+                    </div>
+                    <div class="form-group">
+                        <label class="sr-only" for="Password">Password</label>
+                        <input type="password" class="form-control" id="Password" placeholder="Password" [(ngModel)]="user.password" required />
+                    </div>
+                    <button type="submit" class="btn btn-primary menubutton" (click)="login()">GO</button>
+                    <button type="button" class="btn btn-primary menubutton" (click)="register()">Register</button>
+                </form>
+                <form class="navbar-form navbar-right form-inline" role="form" *ngIf="loggedIn">
+                    <div class="form-group">
+                        <label class="sr-only" for="logout">Welcome {{ user.name }}</label>
+                        <span class="welcome-message">Welcome {{ user.name }}</span>
+                        <button type="button" class="btn btn-success" id="logout" (click)="logout()">Log Out</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav> 
