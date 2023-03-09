@@ -1,1 +1,81 @@
-<p>listing works!</p>
+<div class="wrap">
+	<div class="container">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="row">
+						<div class="col-md-8">
+							<div class="jumbotron listingBox">
+								<h3>
+								{{ listingInformation.jobTitle }} <span *ngIf="listingInformation.jobStatus=='Completed'" class="btn btn-danger btn-xs">COMPLETED</span>
+								<span *ngIf="listingInformation.jobStatus=='Submitted'" class="btn btn-success btn-xs">OPEN</span>
+								<span *ngIf="listingInformation.jobStatus=='In Progress'||listingInformation.jobStatus=='Awaiting Review'" class="btn btn-warning btn-xs">IN PROGRESS</span>
+							</h3>
+								<div><i class="fa fa-thumb-tack"></i> <a routerLink="/search">{{ listingInformation.jobCategory }}</a></div>
+								<div><span class="glyphicon glyphicon-map-marker"></span> {{ listingInformation.jobAddressStreet }}, {{ listingInformation.jobAddressCity }}, {{ listingInformation.jobAddressCountry }}, {{ listingInformation.jobAddressPostal }}</div>
+								<div>
+									{{ listingInformation.jobDescription }}
+                                </div>
+								<div>
+									<ul class="nav">
+										<li class="active" *ngFor="let skill of listingInformation.jobSkills">
+											<a class="badge pull-left" href><i class="glyphicon glyphicon-tags"></i>&nbsp;&nbsp;{{ skill.skillName }}</a>
+										</li>
+									</ul>
+								</div>
+							<div class="row">
+								<div class="col-md-12 requestorInfo">
+									 <img *ngIf="requestorPicture == null" alt="User Avatar" src="images/default_avatar.png" class="img-circle requestorAvatar" />
+                       				 <img *ngIf="requestorPicture != null" alt="User Avatar" src="{{ requestorPicture }}" class="img-circle requestorAvatar" />
+									<a routerLink="/profile"><span class="requestorName">{{ requestor }}</span></a>
+								</div>
+							</div>
+						</div>
+						</div>
+						<div class="col-md-4">
+							<div class="row">
+								<div class="col-md-12">
+									<img *ngIf="listingInformation.jobImage == null" src="images/default_picture.png" class="img-thumbnail thumbLarge" />
+									<img *ngIf="listingInformation.jobImage != null" src="{{ listingInformation.jobImage }}" class="img-thumbnail thumbLarge" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row bidRow">
+				<div class="col-md-12">
+					<table class="table table-striped pastBids">
+						<tr *ngFor="let bid of bidList | orderBy: 'bidPrice'">
+							<td class="bidImage">
+									<img *ngIf="bid.bidProvider.profilePic == null" alt="User Avatar" src="images/default_avatar.png" class="img-circle requestorAvatar" />
+                      				<img *ngIf="bid.bidProvider.profilePic != null" alt="User Avatar" src="{{ bid.bidProvider.profilePic }}" class="img-circle requestorAvatar" />
+							</td>
+							<td>
+								<h3>
+									 <a routerLink="/profile"><span class="bidderName">{{ bid.bidProvider.userFullName }}</span></a>
+								</h3>
+							</td>
+							<td *ngIf="bid.bidProviderAvg > 0">
+								<star-rating ng-model="bid.bidProviderAvg" readonly="isRatingReadonly"></star-rating> ({{ reviewNum }} reviews)
+							</td>
+							<td>
+								<h3 class="text-success text-right">
+									{{ bid.bidPrice | currency }} <small>{{ bid.bidDate | date:'MM/dd/yyyy' }}</small>
+								</h3>
+							</td>
+							<td class="col-md-2 text-right" *ngIf="isOwner && listingInformation.jobStatus=='Submitted'">
+								<button class="btn btn-primary btn-lg" (click)="accept(bid.id, bid.bidProvider.id)">Accept Bid</button>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div ng-hide="isOwner || listingInformation.jobStatus!='Submitted' || loggedIn != 'true'" class="row listingButtons">
+				<div class="col-md-12">
+					<button class="btn btn-primary btn-lg" (click)="newBid(listingID)">Submit New Bid</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
