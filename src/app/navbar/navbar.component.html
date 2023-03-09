@@ -15,8 +15,8 @@
         <div class="collapse navbar-collapse" id="navbar-collapse-2">
             <ul class="nav navbar-nav navbar-right" id="mainmenu">
                 <li class="navmenu" *ngIf="loggedIn"><a href (click)="profile()"><span class="glyphicon glyphicon-user icon mobile"></span><br class="iconline mobile">Dashboard</a></li>
-                <li class="navmenu"><a href (click)="getJobs()"><span class="glyphicon glyphicon-pushpin icon mobile"></span><br class="iconline mobile">Listings</a></li>
-                <li class="navmenu"><a href="#search"><span class="glyphicon glyphicon-search icon mobile"></span><br class="iconline mobile">Search</a></li>
+                <li class="navmenu"><a href (click)="getJobs()"><ng-icon name="bootstrapPinAngleFill"></ng-icon><br class="iconline mobile">Listings</a></li>
+                <li class="navmenu"><a href="#search"><ng-icon name="bootstrapSearch"></ng-icon><br class="iconline mobile">Search</a></li>
                 <li>
                     <a class="btn btn-default btn-outline btn-circle collapsed" data-toggle="collapse" href="#login-collapse" id="loginToggle"
                     aria-expanded="false" aria-controls="login-collapse"><span *ngIf="loggedOut">Sign in</span><span *ngIf="loggedIn">Account</span></a>

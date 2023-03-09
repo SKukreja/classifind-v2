@@ -57,11 +57,14 @@
 		font-size: 27px 
 .navbar-brand 
 	position: relative 
-	z-index: 2 
-.navbar-nav 
+	z-index: 2
+.navbar-header
+	width: 100%
+.navbar-nav
+	flex-direction: row
+	align-items: center
 	&.navbar-right 
 		height: 90px 
-		height: 230px 
 		.btn 
 			position: relative 
 			z-index: 5 
@@ -82,7 +85,9 @@
 			a 
 				text-align: center 
 				font-size: 18px 
-.navbar 
+.navbar
+	.container
+		flex-wrap: nowrap
 	.navbar-collapse 
 		position: relative 
 		.navbar-right 

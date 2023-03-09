@@ -1,0 +1,7 @@
+<div id="search" ng-controller="searchController">
+    <button type="button" class="close">×</button>
+    <form ng-submit="showResults(searchQuery)">
+        <input type="search" value="" placeholder="type keyword(s) here" ng-model="searchQuery" />
+        <button type="submit" class="btn btn-primary" (click)="search()">Search</button>
+    </form>
+</div>
