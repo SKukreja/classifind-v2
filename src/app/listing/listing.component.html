@@ -46,7 +46,7 @@
 			<div class="row bidRow">
 				<div class="col-md-12">
 					<table class="table table-striped pastBids">
-						<tr *ngFor="let bid of bidList | orderBy: 'bidPrice'">
+						<!--<tr *ngFor="let bid of bidList | orderBy: 'bidPrice'">
 							<td class="bidImage">
 									<img *ngIf="bid.bidProvider.profilePic == null" alt="User Avatar" src="images/default_avatar.png" class="img-circle requestorAvatar" />
                       				<img *ngIf="bid.bidProvider.profilePic != null" alt="User Avatar" src="{{ bid.bidProvider.profilePic }}" class="img-circle requestorAvatar" />
@@ -57,7 +57,7 @@
 								</h3>
 							</td>
 							<td *ngIf="bid.bidProviderAvg > 0">
-								<star-rating ng-model="bid.bidProviderAvg" readonly="isRatingReadonly"></star-rating> ({{ reviewNum }} reviews)
+								<!--<star-rating ng-model="bid.bidProviderAvg" readonly="isRatingReadonly"></star-rating> ({{ reviewNum }} reviews)-
 							</td>
 							<td>
 								<h3 class="text-success text-right">
@@ -67,7 +67,7 @@
 							<td class="col-md-2 text-right" *ngIf="isOwner && listingInformation.jobStatus=='Submitted'">
 								<button class="btn btn-primary btn-lg" (click)="accept(bid.id, bid.bidProvider.id)">Accept Bid</button>
 							</td>
-						</tr>
+						</tr>-->
 					</table>
 				</div>
 			</div>

@@ -20,9 +20,9 @@
                     </ul>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-7 excerpet">
-                    <h3><a href (click)="openListing(r.id)">{{ r.jobTitle }}</a></h3>
+                    <h3><a routerLink="/listing">{{ r.jobTitle }}</a></h3>
                     <p>{{ r.jobDescription }}</p>
-                    <span class="plus"><a href title="Lorem ipsum" (click)="openListing(r.id)"><ng-icon name="bootstrapPlus"></ng-icon></a></span>
+                    <span class="plus"><a title="Lorem ipsum" routerLink="/listing"><ng-icon name="bootstrapPlus"></ng-icon></a></span>
                 </div>
                 <span class="clearfix borda"></span>
             </article>
