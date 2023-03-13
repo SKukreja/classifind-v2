@@ -10,4 +10,5 @@ export interface Job {
     jobAddressCountry: string;
     jobPostingDate: string;
     jobStatus: string;
+    jobImage: string;
 }

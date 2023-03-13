@@ -5,7 +5,7 @@ import { BrowseComponent } from './browse/browse.component';
 import { CreateListingComponent } from './create-listing/create-listing.component';
 import { CreateReviewComponent } from './create-review/create-review.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { ListingComponent } from './listing/listing.component';
+import { JobComponent } from './job/job.component';
 import { ManageComponent } from './manage/manage.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RegisterComponent } from './register/register.component';
@@ -16,7 +16,7 @@ const routes: Routes = [
   { path: '', component: SplashComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'listing', component: ListingComponent },
+  { path: 'job/:_id', component: JobComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'search', component: ResultsComponent },
   { path: 'new', component: CreateListingComponent },

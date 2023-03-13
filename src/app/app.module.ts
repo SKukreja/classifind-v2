@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,7 +18,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { CreateListingComponent } from './create-listing/create-listing.component';
 import { CreateReviewComponent } from './create-review/create-review.component';
 import { BidComponent } from './bid/bid.component';
-import { ListingComponent } from './listing/listing.component';
+import { JobComponent } from './job/job.component';
 import { ManageComponent } from './manage/manage.component';
 import { BrowseComponent } from './browse/browse.component';
 
@@ -34,7 +35,7 @@ import { BrowseComponent } from './browse/browse.component';
     CreateListingComponent,
     CreateReviewComponent,
     BidComponent,
-    ListingComponent,
+    JobComponent,
     ManageComponent,
     BrowseComponent,
   ],
@@ -42,6 +43,7 @@ import { BrowseComponent } from './browse/browse.component';
     BrowserModule,
     NgbModule,
     NgPipesModule,
+    HttpClientModule,
     AppRoutingModule,
     FormsModule,
     NgIconsModule.withIcons({ bootstrapPinAngleFill, bootstrapSearch, bootstrapPlus, bootstrapPersonCircle, bootstrapClock })

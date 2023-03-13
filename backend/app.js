@@ -41,7 +41,8 @@ app.post("/api/jobs", (req, res, next) => {
         jobAddressCity: req.body.jobAddressCity,
         jobAddressCountry: req.body.jobAddressCountry,
         jobPostingDate: new Date(),
-        jobStatus: 'Submitted'
+        jobStatus: 'Submitted',
+        jobImage: req.body.jobImage
     });
     job.save();
     res.status(201).json({

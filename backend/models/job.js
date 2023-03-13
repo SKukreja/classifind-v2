@@ -12,6 +12,7 @@ const jobSchema = mongoose.Schema({
     jobAddressCountry: {type: String },
     jobPostingDate: { type: Date, default: new Date() },
     jobStatus: {type: String, default: "Submitted" },
+    jobImage: {type: String, default: "" }
 });
 
 module.exports = mongoose.model('job', jobSchema);

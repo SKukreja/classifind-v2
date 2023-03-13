@@ -18,9 +18,9 @@
                                 </div>
 								<div>
 									<ul class="nav">
-										<li class="active" *ngFor="let skill of listingInformation.jobSkills">
+										<!--<li class="active" *ngFor="let skill of listingInformation.jobSkills">
 											<a class="badge pull-left" href><i class="glyphicon glyphicon-tags"></i>&nbsp;&nbsp;{{ skill.skillName }}</a>
-										</li>
+										</li>-->
 									</ul>
 								</div>
 							<div class="row">
@@ -71,7 +71,7 @@
 					</table>
 				</div>
 			</div>
-			<div ng-hide="isOwner || listingInformation.jobStatus!='Submitted' || loggedIn != 'true'" class="row listingButtons">
+			<div *ngIf="!isOwner || listingInformation.jobStatus=='Submitted' || loggedIn" class="row listingButtons">
 				<div class="col-md-12">
 					<button class="btn btn-primary btn-lg" (click)="newBid(listingID)">Submit New Bid</button>
 				</div>
