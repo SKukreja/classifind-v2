@@ -1,4 +1,5 @@
 export class user {
+    _id: string = "";
     userFullName: string = "";
     userPhone: string = "";
     userAddressStreet: string = "";
@@ -8,5 +9,6 @@ export class user {
     userDescription: string = "";
     username: string = "";
     password: string = "";
+    profilePic: string ="";
     email: string = "";
 }

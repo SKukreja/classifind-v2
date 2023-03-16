@@ -3,6 +3,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const Job = require('./models/job');
+const Bid = require('./models/bid');
+const User = require('./models/user');
 
 const app = express();
 
@@ -47,6 +49,17 @@ app.post("/api/jobs", (req, res, next) => {
     job.save();
     res.status(201).json({
         message: 'Job posted successfully'
+    });
+});
+
+app.get("/api/bids", (req, res, next) => {
+    Bid.find({ jobId: req.query.id }).sort({ bidDate: -1 }).populate('bidProvider')
+    .then(documents => {
+        console.log(documents);
+        res.status(200).json({
+            message: "Fetched jobs successfully",
+            bids: documents
+        });
     });
 });
 

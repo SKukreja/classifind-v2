@@ -1,6 +1,6 @@
 export interface Job {
     _id: string;
-    requestorId: number;
+    requestorId: string;
     jobTitle: string;
     jobDescription: string;
     jobCategory: string;
