@@ -25,8 +25,7 @@
 								</div>
 							<div class="row">
 								<div class="col-md-12 requestorInfo">
-									 <img *ngIf="requestorPicture == null" alt="User Avatar" src="images/default_avatar.png" class="img-circle requestorAvatar" />
-                       				 <img *ngIf="requestorPicture != null" alt="User Avatar" src="{{ requestorPicture }}" class="img-circle requestorAvatar" />
+                       				 <img alt="User Avatar" [src]="requestorPicture || '/assets/images/default_avatar.png'" alt="User Avatar" class="img-circle requestorAvatar" />
 									<a routerLink="/profile"><span class="requestorName">{{ requestor }}</span></a>
 								</div>
 							</div>
@@ -35,8 +34,7 @@
 						<div class="col-md-4">
 							<div class="row">
 								<div class="col-md-12">
-									<img *ngIf="listingInformation.jobImage == null" src="images/default_picture.png" class="img-thumbnail thumbLarge" />
-									<img *ngIf="listingInformation.jobImage != null" src="{{ listingInformation.jobImage }}" class="img-thumbnail thumbLarge" />
+									<img [src]="listingInformation.jobImage || '/assets/images/default_picture.png'" alt="Job Image" class="img-thumbnail thumbLarge" />
 								</div>
 							</div>
 						</div>
@@ -48,8 +46,7 @@
 					<table class="table table-striped pastBids">
 						<tr *ngFor="let bid of bidList | orderBy: 'bidPrice'">
 							<td class="bidImage">
-									<img *ngIf="bid.bidProvider.profilePic == null" alt="User Avatar" src="images/default_avatar.png" class="img-circle requestorAvatar" />
-                      				<img *ngIf="bid.bidProvider.profilePic != null" alt="User Avatar" src="{{ bid.bidProvider.profilePic }}" class="img-circle requestorAvatar" />
+									<img [src]="bid.bidProvider.profilePic || '/assets/images/default_avatar.png'" alt="User Avatar" class="img-circle requestorAvatar" />
 							</td>
 							<td>
 								<h3>

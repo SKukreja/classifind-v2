@@ -21,6 +21,7 @@ import { BidComponent } from './bid/bid.component';
 import { JobComponent } from './job/job.component';
 import { ManageComponent } from './manage/manage.component';
 import { BrowseComponent } from './browse/browse.component';
+import { TokenInterceptor } from './services/interceptor.service';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,7 @@ import { BrowseComponent } from './browse/browse.component';
     FormsModule,
     NgIconsModule.withIcons({ bootstrapPinAngleFill, bootstrapSearch, bootstrapPlus, bootstrapPersonCircle, bootstrapClock })
   ],
-  providers: [],
+  providers: [ { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true } ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

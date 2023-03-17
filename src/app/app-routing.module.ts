@@ -17,7 +17,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'job/:_id', component: JobComponent },
-  { path: 'profile', component: ProfileComponent },
+  { path: 'profile/:_id', component: ProfileComponent },
   { path: 'search', component: ResultsComponent },
   { path: 'new', component: CreateListingComponent },
   { path: 'manage', component: ManageComponent },

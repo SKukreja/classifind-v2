@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { JobsService } from '../services/jobs.service';
 import { Subscription } from "rxjs";
 import { Job } from '../models/job.model';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-results',
@@ -21,8 +22,8 @@ export class ResultsComponent implements OnInit, OnDestroy {
   //private authStatusSub: Subscription;
 
   constructor(
-    public jobsService: JobsService
-    //private authService: AuthService
+    public jobsService: JobsService,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {

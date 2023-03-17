@@ -51,6 +51,44 @@ export class JobsService {
             });
           });
       }
+
+    getJobsByUser(id: string, postsPerPage: number, currentPage: number) {
+      const queryParams = `?id=${id}&pagesize=${postsPerPage}&page=${currentPage}`;
+        this.http
+          .get<{ message: string; jobs: Job[]; maxJobs: number }>(
+            "http://localhost:3000/api/jobsByUser" + queryParams
+          )
+          .pipe(
+            map(jobData => {
+              return {
+                jobs: jobData.jobs.map(job => {
+                  return {                         
+                    _id: job._id,
+                    requestorId: job.requestorId,
+                    jobTitle: job.jobTitle,
+                    jobDescription: job.jobDescription,
+                    jobCategory: job.jobCategory,
+                    jobAddressStreet: job.jobAddressStreet,
+                    jobAddressPostal: job.jobAddressPostal,
+                    jobAddressCity: job.jobAddressCity,
+                    jobAddressCountry: job.jobAddressCountry,
+                    jobPostingDate: job.jobPostingDate,
+                    jobStatus: job.jobStatus,
+                    jobImage: job.jobImage
+                  };
+                }),
+                maxJobs: jobData.maxJobs
+              };
+            })
+          )
+          .subscribe(transformedJobs => {
+            this.jobs = transformedJobs.jobs;
+            this.jobsUpdated.next({
+              jobs: [...this.jobs],
+              jobCount: transformedJobs.maxJobs
+            });
+          });
+      }
     
     getJob(postId: string) {
       this.http.get(

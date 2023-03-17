@@ -1,9 +1,9 @@
-import { user } from "./user.model";
+import { User } from "./user.model";
 
 export class Bid {
     _id: string;
     bidDate: Date = new Date();
     bidPrice: number = 0.00;
-    bidProvider: user;
+    bidProvider: User;
     jobId: string;
 }

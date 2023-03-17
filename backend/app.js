@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const Job = require('./models/job');
 const Bid = require('./models/bid');
 const User = require('./models/user');
-
+const Review = require('./models/review');
 const app = express();
 
 mongoose.connect(process.env.MONGO_CONNECTION_STRING)
@@ -73,6 +73,13 @@ app.get("/api/jobs", (req, res, next) => {
     });
 });
 
+app.get("/api/jobsByUser", (req, res, next) => {
+    Job.find({ requestorId: req.query.id }).sort({ jobPostingDate: -1 })
+    .then(documents => {
+        res.status(200).json(documents);
+    });
+});
+
 app.get("/api/job", (req, res, next) => {
     Job.findById(req.query.id)
     .then(job => {
@@ -86,6 +93,36 @@ app.get("/api/job", (req, res, next) => {
         res.status(500).json({
             message: "Fetching job failed!"
         });
+    });
+});
+
+app.get("/api/user", (req, res, next) => {
+    User.findById(req.query.id)
+    .then(user => {
+    if (user) {
+        res.status(200).json(user);
+    } else {
+        res.status(404).json({ message: "Job not found!" });
+    }
+    })
+    .catch(error => {
+        res.status(500).json({
+            message: "Fetching job failed!"
+        });
+    });
+});
+
+app.get("/api/reviewsByProvider", (req, res, next) => {
+    Review.find({ providerUserId: req.query.id }).sort({ reviewDate: -1 }).populate('jobRequestor').populate('job')
+    .then(documents => {
+        res.status(200).json(documents);
+    });
+});
+
+app.get("/api/reviewsByRequestor", (req, res, next) => {
+    Review.find({ requestorUserId: req.query.id }).sort({ reviewDate: -1 }).populate('jobProvider').populate('job')
+    .then(documents => {
+        res.status(200).json(documents);
     });
 });
 

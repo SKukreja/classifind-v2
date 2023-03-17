@@ -1,10 +1,15 @@
-export class review {
+import { Job } from "./job.model";
+import { User } from "./user.model";
+
+export class Review {
     _id: string = "";
     reviewComments: string = "";
     reviewRating: number = 0.0;
-    reviewType: string = "Requestor";
     reviewDate: Date = new Date();
-    reviewedJobId: number = 0;
-    submittingUserId: string = "";
-    receivingUserId: string = "";
+    reviewedJobId: string = "";
+    requestorUserId: string = "";
+    providerUserId: string = "";
+    jobRequestor: User;
+    jobProvider: User;
+    job: Job;
 }
