@@ -36,7 +36,7 @@
           </div>
        </div>
        <div class="row">
-          <div class="col-md-12" *ngIf="requestedJobs.length>0">
+          <div class="col-md-12" *ngIf="requestedJobs.length > 0">
              <h2>Jobs that {{ profile.userFullName }} has Posted</h2>
              <div class="row">
                 <div class="col-md-4 card" *ngFor="let job of requestedJobs | slice:0:pSize">
@@ -74,7 +74,7 @@
              <button class="btn btn-primary btn-lg " id="newJobBtn " (click)="newListing() " *ngIf="loggedIn">Create New Listing</button>
           </div>
        </div>
-       <div class="row" *ngIf="receivedProviderReviews.length>0">
+       <div class="row" *ngIf="receivedProviderReviews.length > 0">
           <div class="col-md-12">
             <h2>Reviews for Jobs {{ profile.userFullName }} has Completed</h2>
              <div class="col-md-4 col-sm-6" *ngFor="let review of receivedProviderReviews | slice:0:pSize">
@@ -85,8 +85,8 @@
                          <p> {{ review.reviewComments }} </p>
                       </div>
                       <div class="person-text">
-                         <img alt="User Avatar" [src]="review.jobRequestor.profilePic || '/assets/images/default_avatar.png'" class="img-circle requestorAvatar" />
-                         <a title="" href="#" (click)="viewProfile(review.jobRequestor._id)">{{ review.jobRequestor.userFullName }}</a>
+                         <img alt="User Avatar" [src]="review.jobRequestor?.profilePic || '/assets/images/default_avatar.png'" class="img-circle requestorAvatar" />
+                         <a title="" href="#" (click)="viewProfile(review.jobRequestor?._id)">{{ review.jobRequestor?.userFullName }}</a>
                          <i>{{ review.reviewDate | timeAgo }}</i>
                       </div>
                    </div>
@@ -98,7 +98,7 @@
              </button>
           </div>
        </div>
-       <div class="row" *ngIf="receivedRequestorReviews.length>0">
+       <div class="row" *ngIf="receivedRequestorReviews.length > 0">
           <div class="col-md-12">
             <h2>Reviews for Jobs that {{ profile.userFullName }} Posted</h2>
                <div class="col-md-4 col-sm-6" *ngFor="let review of receivedRequestorReviews | slice:0:pSize">
@@ -109,8 +109,8 @@
                          <p> {{ review.reviewComments }} </p>
                       </div>
                       <div class="person-text">
-                         <img alt="User Avatar" [src]="review.jobProvider.profilePic || '/assets/images/default_avatar.png'" class="img-circle requestorAvatar" />
-                         <a title="" href="#" (click)="viewProfile(review.jobProvider._id)">{{ review.jobProvider.userFullName }}</a>
+                         <img alt="User Avatar" [src]="review.jobProvider?.profilePic || '/assets/images/default_avatar.png'" class="img-circle requestorAvatar" />
+                         <a title="" href="#" (click)="viewProfile(review.jobProvider?._id)">{{ review.jobProvider?.userFullName }}</a>
                          <i>{{ review.reviewDate | timeAgo }}</i>
                       </div>
                    </div>

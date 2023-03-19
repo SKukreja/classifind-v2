@@ -20,18 +20,18 @@ export class ProfileComponent implements OnInit {
   private reviewsSub: Subscription = new Subscription;
   profileId: string;
   profile: User;
-  requestedJobs: Job[];
+  requestedJobs: Job[] = [];
   requestorPage = 0;
-  pSize = 0;
+  pSize = 5;
   receivedRequestorPage = 0;
   receivedProviderPage = 0;
-  receivedRequestorReviews: Review[];
-  receivedProviderReviews: Review[];
+  receivedRequestorReviews: Review[] = [];
+  receivedProviderReviews: Review[] = [];
   receivedProviderAverage = 5;
   receivedRequestorAverage = 5;
   loggedIn = false;
-  providerCount: number;
-  requestorCount: number;
+  providerCount: number = 0;
+  requestorCount: number = 0;
   userSkills = [{ skillName: "Computers", skillLevel: 1}];
 
   constructor(
@@ -52,28 +52,31 @@ export class ProfileComponent implements OnInit {
         this.profile = user.user;
       });
 
-    this.jobsService.getJobsByUser(this.profileId, 0, 0);
-    this.jobsSub = this.jobsService
-      .getJobsUpdateListener()
-      .subscribe((jobData: { jobs: Job[]; jobCount: number }) => {
-        this.requestorCount = jobData.jobCount;
-        this.requestedJobs = jobData.jobs;        
+    console.log(this.profileId);
+
+    this.jobsService.getJobsByUser(this.profileId + "", 0, 0)
+      .subscribe(response => {
+        console.log(response);
+        response.forEach((job) => {
+          this.requestedJobs.push(job as Job);
+        });
+        console.log(this.requestedJobs.length);
       });
 
-    this.reviewsService.getReviewsByRequestor(this.profileId, 0, 0);
-    this.reviewsSub = this.reviewsService
-      .getReviewsUpdateListener()
-      .subscribe((reviewData: { reviews: Review[]; reviewCount: number }) => {
-        this.requestorCount = reviewData.reviewCount;
-        this.receivedRequestorReviews = reviewData.reviews;
-      });
 
-    this.reviewsService.getReviewsByProvider(this.profileId, 0, 0);
-    this.reviewsSub = this.reviewsService
-      .getReviewsUpdateListener()
-      .subscribe((reviewData: { reviews: Review[]; reviewCount: number }) => {
-        this.providerCount = reviewData.reviewCount;
-        this.receivedProviderReviews = reviewData.reviews;
+
+    this.reviewsService.getReviewsByProvider(this.profileId + "", 0, 0)
+      .subscribe(response => {
+        response.forEach((review) => {
+          this.receivedProviderReviews.push(review as Review);
+        });
+      }); 
+
+    this.reviewsService.getReviewsByRequestor(this.profileId + "", 0, 0)
+      .subscribe(response => {
+        response.forEach((review) => {
+          this.receivedRequestorReviews.push(review as Review);         
+        });
       });
   }
 
@@ -81,11 +84,11 @@ export class ProfileComponent implements OnInit {
 
   }
 
-  viewProfile(userId: string) {
+  viewProfile(userId?: string) {
 
   }
 
-  viewListing(jobId: string) {
+  viewListing(jobId?: string) {
 
   }
 }
