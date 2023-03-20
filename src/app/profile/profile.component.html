@@ -57,7 +57,7 @@
                             {{ job.jobDescription | slice:0:125 }}...	
                          </p>
                          <div class="cardButtons ">
-                            <a class="btn btn-primary " *ngIf="job.jobStatus=='Submitted' " (click)="viewListing(job._id) " href>View</a> 
+                            <a class="btn btn-primary " *ngIf="job.jobStatus=='Submitted' " [routerLink]="'/job/' + job._id">View</a> 
                          </div>
                       </div>
                    </div>

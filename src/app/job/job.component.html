@@ -50,7 +50,7 @@
 							</td>
 							<td>
 								<h3>
-									 <a routerLink="/profile"><span class="bidderName">{{ bid.bidProvider.userFullName }}</span></a>
+									 <a [routerLink]="'/profile/' + bid.bidProvider._id"><span class="bidderName">{{ bid.bidProvider.userFullName }}</span></a>
 								</h3>
 							</td>
 							<!--

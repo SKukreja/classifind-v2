@@ -9,7 +9,7 @@ import { AuthService } from '../services/auth.service';
 })
 export class NavbarComponent {
   user = new User("Sumit", "test", "sumit@kukreja.net")
-  loggedIn : boolean = false
+  loggedIn : boolean = true
   loggedOut : boolean = true
   
   login = () => {

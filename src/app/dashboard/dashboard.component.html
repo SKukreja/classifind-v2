@@ -1,1 +1,163 @@
-<p>dashboard works!</p>
+<div class="wrap">
+    <div class="container">
+       <div class="row">
+          <div class="col-md-12">
+             <div class="jumbotron profileBox">
+                <div class="row">
+                   <div class="col-md-3">
+                   <img class="profileAvatar" [src]="profile.profilePic || '/assets/images/default_avatar.png'" alt="User Avatar" />
+                   <div class="row">
+                         <div class="col-md-12">
+                               <h3 *ngIf="(receivedProviderAverage>0&&receivedProviderAverage<6) || (receivedRequestorAverage>0&&receivedRequestorAverage<6)">Average Rating</h3>
+                               <div *ngIf="receivedProviderAverage>0&&receivedProviderAverage<6">Jobs You've Completed: <br />
+                               <input type="number" value="{{receivedProviderAverage}}" id="completedRating"><h3 style="margin-top: 5px">{{ receivedProviderAverage }}&nbsp;<small>({{ providerCount }} reviews)</small></h3><br /></div>
+                               <div *ngIf="receivedRequestorAverage>0&&receivedRequestorAverage<6">Jobs You've Posted: <br />
+                               <input type="number" value="{{receivedRequestorAverage}}" id="postedRating"><h3 style="margin-top: 5px">{{ receivedRequestorAverage }}&nbsp;<small>({{ requestorCount }} reviews)</small></h3></div>
+                         </div>
+                   </div>
+                   </div>
+                   <div class="col-md-9">
+                         <h2 class="text-left headtext">{{ profile.userFullName }}</h2>
+                         <p><span class="glyphicon glyphicon-map-marker"></span> {{ profile.userAddressStreet }}, {{ profile.userAddressCity }},
+                         {{ profile.userAddressCountry }}, {{ profile.userAddressPostal }}
+                         </p>
+                         <p><span class="glyphicon glyphicon-earphone"></span> {{ profile.userPhone }}</p>
+                         <p>{{ profile.userDescription }}</p>
+                         <div>
+                               <ul class="nav">
+                                     <li class="active" *ngFor="let skill of userSkills">
+                                           <a class="badge pull-left" href><i class="glyphicon glyphicon-tags"></i>&nbsp;&nbsp;{{ skill.skillName }}</a>
+                                     </li>
+                               </ul>
+                         </div>
+                   </div>
+                </div>
+          </div>
+       </div>
+       <div class="row" *ngIf="providedJobs.length>0">
+          <div class="col-md-12">
+             <h2>Jobs You're Working On</h2>
+             <div class="row">
+                <div class="col-md-4 card" *ngFor="let job of providedJobs | slice:0:pSize">
+                   <div class="thumbnail dashboardThumb">
+                      <div class="pictureBox">
+                      <img [src]="job.jobImage || '/assets/images/default_picture.png'" class="jobPicture img-thumbnail thumbLarge" />
+                      <div class="caption ">
+                         <h3>
+                            {{ job.jobTitle }}
+                         </h3>
+                         <p>
+                            <span *ngIf="job.jobStatus=='In Progress' " class="btn btn-warning btn-xs ">IN PROGRESS</span>
+                            <span *ngIf="job.jobStatus=='Awaiting Review' " class="btn btn-info btn-xs ">AWAITING REVIEW</span>
+                         </p>
+                         <p class="jobDesc">
+                            {{ job.jobDescription | slice:0:125 }}...	
+                         </p>
+                         <div class="cardButtons ">
+                            <a class="btn btn-primary " *ngIf="job.jobStatus=='In Progress' " [routerLink]="'/job/' + job._id">View</a>
+                            <a class="btn btn-primary " (click)="reviewPage(job._id, job.acceptedBidId)" *ngIf="job.jobStatus=='Awaiting Review'">Submit Review</a>
+                         </div>
+                      </div>
+                   </div>
+                </div>
+             </div>
+             <button class="left carousel-control paginationButton" [disabled]="providerPage==0" ng-class="{'disabledButton': providerPage==0}" ng-hide="providedJobs.length<=pSize" (click)="providerPage=providerPage-1 ">
+                 <span class="glyphicon glyphicon-chevron-left arrowButtons"></span>
+             </button>
+             <button class="right carousel-control paginationButton" [disabled]="providerPage>= providedJobs.length/pSize - 1" ng-hide="providedJobs.length<=pSize" ng-class="{'disabledButton': providerPage>= providedJobs.length/pSize - 1}" (click)="providerPage=providerPage+1">
+                    <span class="glyphicon glyphicon-chevron-right arrowButtons"></span>
+             </button>
+          </div>
+       </div>
+       <div class="row">
+          <div class="col-md-12" *ngIf="requestedJobs.length>0">
+             <h2>Jobs You've Posted</h2>
+             <div class="row">
+                <div class="col-md-4 card" *ngFor="let job of requestedJobs | slice:0:pSize">
+                   <div class="thumbnail dashboardThumb">
+                      <div class="pictureBox">
+                        <img [src]="job.jobImage || '/assets/images/default_picture.png'" class="jobPicture img-thumbnail thumbLarge" />
+                      </div>
+                      <div class="caption ">
+                         <h3>
+                            {{ job.jobTitle }}
+                         </h3>
+                         <p>
+                            <span *ngIf="job.jobStatus=='Completed' " class="btn btn-danger btn-xs ">COMPLETED</span>
+                            <span *ngIf="job.jobStatus=='Submitted' " class="btn btn-success btn-xs ">OPEN</span>
+                            <span *ngIf="job.jobStatus=='In Progress' " class="btn btn-warning btn-xs ">IN PROGRESS</span>
+                         </p>
+                         <p class="jobDesc ">
+                            {{ job.jobDescription | slice:0:125 }}...	
+                         </p>
+                         <div class="cardButtons ">
+                            <a class="btn btn-primary " *ngIf="job.jobStatus=='In Progress' " (click)="manageJob(job.id, job.acceptedBidId)" href>Manage</a> 
+                            <a class="btn btn-primary " *ngIf="job.jobStatus=='Submitted' " (click)="viewListing(job.id) " href>View</a> 
+                            <a class="btn btn-default " *ngIf="job.jobStatus=='Submitted' " (click)="deleteListing(job.id) " ng-confirm-click="You
+                               are about to delete your listing! Are you sure you want to do this? " href>Delete</a>
+                         </div>
+                      </div>
+                   </div>
+                </div>
+             </div>
+             <button class="left carousel-control paginationButton" [disabled]="requestorPage==0" ng-hide="requestedJobs.length<=pSize" ng-class="{'disabledButton': requestorPage==0}" (click)="requestorPage=requestorPage-1 ">
+                 <span class="glyphicon glyphicon-chevron-left arrowButtons"></span>
+             </button>
+             <button class="right carousel-control paginationButton" [disabled]="requestorPage>= requestedJobs.length/pSize - 1" ng-hide="requestedJobs.length<=pSize" ng-class="{'disabledButton': requestorPage>= requestedJobs.length/pSize - 1}" (click)="requestorPage=requestorPage+1">
+                    <span class="glyphicon glyphicon-chevron-right arrowButtons"></span>
+             </button>
+          </div>
+          <div class="text-right listingButtons">
+             <button class="btn btn-primary btn-lg " id="newJobBtn " (click)="newListing() " *ngIf="loggedIn ">Create New Listing</button>
+          </div>
+       </div>
+       <div class="row" ng-hide="receivedProviderReviews.length==0">
+          <div class="col-md-12">
+            <h2>Reviews for Jobs You've Completed</h2>
+                   <div class="col-md-4 col-sm-6" *ngFor="review in receivedProviderReviews | slice:0:pSize">
+                      <div class="block-text rel zmin">
+                         <a (click)="viewListing(review.reviewedJobId)">{{ review.jobReview.jobTitle }}</a>
+                         <div class="mark"><star-rating ng-model="review.reviewRating" readonly="isRatingReadonly"></star-rating>
+                         </div>
+                         <p> {{ review.reviewComments }} </p>
+                      </div>
+                      <div class="person-text">
+                        <img alt="User Avatar" [src]="review.jobProvider?.profilePic || '/assets/images/default_avatar.png'" class="img-circle requestorAvatar" />
+                         <a title="" href="#" (click)="viewUser(review.submittedReviews.id)">{{ review.submittedReviews.userFullName }}</a>
+                         <i>{{ review.reviewDate | timeAgo:'MM/dd/yyyy' }}</i>
+                      </div>
+                   </div>
+             <button class="left carousel-control paginationButton" [disabled]="receivedProviderPage==0" ng-hide="receivedProviderReviews.length<=pSize" ng-class="{'disabledButton': receivedProviderPage==0}" (click)="receivedProviderPage=receivedProviderPage-1 ">
+                 <span class="glyphicon glyphicon-chevron-left arrowButtons"></span>
+             </button>
+             <button class="right carousel-control paginationButton" [disabled]="receivedProviderPage>= receivedProviderReviews.length/pSize - 1" ng-hide="receivedProviderReviews.length<=pSize" ng-class="{'disabledButton': receivedProviderPage>= receivedProviderReviews.length/pSize - 1}" (click)="receivedProviderPage=receivedProviderPage+1">
+                    <span class="glyphicon glyphicon-chevron-right arrowButtons"></span>
+             </button>
+          </div>
+       </div>
+       <div class="row" ng-hide="receivedRequestorReviews.length==0">
+          <div class="col-md-12">
+            <h2>Reviews for Jobs You've Posted</h2>
+                   <div class="col-md-4 col-sm-6" ng-repeat="review in receivedRequestorReviews | startFrom:receivedRequestorPage*pSize | limitTo:pSize">
+                      <div class="block-text rel zmin">
+                         <a [routerLink]="'/job/' + review.job._id">{{ review.jobReview.jobTitle }}</a>
+                         <div class="mark"><star-rating ng-model="review.reviewRating" readonly="isRatingReadonly"></star-rating>
+                         </div>
+                         <p> {{ review.reviewComments }} </p>
+                      </div>
+                      <div class="person-text">
+                        <img alt="User Avatar" [src]="review.jobProvider?.profilePic || '/assets/images/default_avatar.png'" class="img-circle requestorAvatar" />
+                         <a title="" href="#" (click)="viewUser(review.submittedReviews.id)">{{ review.submittedReviews.userFullName }}</a>
+                         <i>{{ review.reviewDate | timeAgo:'MM/dd/yyyy' }}</i>
+                      </div>
+                   </div>
+             <button class="left carousel-control paginationButton" [disabled]="receivedRequestorPage==0" ng-hide="receivedRequestorReviews.length<=pSize" ng-class="{'disabledButton': receivedRequestorPage==0}" (click)="receivedRequestorPage=receivedRequestorPage-1 ">
+                 <span class="glyphicon glyphicon-chevron-left arrowButtons"></span>
+             </button>
+             <button class="right carousel-control paginationButton" [disabled]="receivedRequestorPage>= receivedRequestorReviews.length/pSize - 1" ng-hide="receivedRequestorReviews.length<=pSize" ng-class="{'disabledButton': receivedRequestorPage>= receivedRequestorReviews.length/pSize - 1}" (click)="receivedRequestorPage=receivedRequestorPage+1">
+                    <span class="glyphicon glyphicon-chevron-right arrowButtons"></span>
+             </button>
+          </div>
+       </div>
+    </div>
+ </div>

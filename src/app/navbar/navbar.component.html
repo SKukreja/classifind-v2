@@ -14,7 +14,7 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="navbar-collapse-2">
             <ul class="nav navbar-nav navbar-right" id="mainmenu">
-                <li class="navmenu" *ngIf="loggedIn"><a href (click)="profile()"><ng-icon name="bootstrapPersonCircle"></ng-icon><br class="iconline mobile">Dashboard</a></li>
+                <li class="navmenu" *ngIf="loggedIn"><a [routerLink]="'/dashboard'"><ng-icon name="bootstrapPersonCircle"></ng-icon><br class="iconline mobile">Dashboard</a></li>
                 <li class="navmenu"><a href routerLink="/browse"><ng-icon name="bootstrapPinAngleFill"></ng-icon><br class="iconline mobile">Listings</a></li>
                 <li class="navmenu"><a routerLink="/search"><ng-icon name="bootstrapSearch"></ng-icon><br class="iconline mobile">Search</a></li>
                 <li>
