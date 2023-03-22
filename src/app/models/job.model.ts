@@ -8,6 +8,7 @@ export interface Job {
     jobAddressPostal: string;
     jobAddressCity: string;
     jobAddressCountry: string;
+    acceptedBidId: string | undefined;
     jobPostingDate: string;
     jobStatus: string;
     jobImage: string;

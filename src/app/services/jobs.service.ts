@@ -27,6 +27,7 @@ export class JobsService {
                   return {                         
                     _id: job._id,
                     requestorId: job.requestorId,
+                    acceptedBidId: job.acceptedBidId,
                     jobTitle: job.jobTitle,
                     jobDescription: job.jobDescription,
                     jobCategory: job.jobCategory,

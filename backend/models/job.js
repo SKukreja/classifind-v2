@@ -12,6 +12,7 @@ const jobSchema = mongoose.Schema({
     jobAddressCountry: {type: String },
     jobPostingDate: { type: Date, default: new Date() },
     jobStatus: {type: String, default: "Submitted" },
+    acceptedBidId: { type: mongoose.Schema.Types.ObjectId },
     jobImage: {type: String, default: "" }
 });
 

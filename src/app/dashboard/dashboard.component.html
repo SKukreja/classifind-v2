@@ -55,7 +55,7 @@
                          </p>
                          <div class="cardButtons ">
                             <a class="btn btn-primary " *ngIf="job.jobStatus=='In Progress' " [routerLink]="'/job/' + job._id">View</a>
-                            <a class="btn btn-primary " (click)="reviewPage(job._id, job.acceptedBidId)" *ngIf="job.jobStatus=='Awaiting Review'">Submit Review</a>
+                            <a class="btn btn-primary " (click)="reviewPage(job._id)" *ngIf="job.jobStatus=='Awaiting Review'">Submit Review</a>
                          </div>
                       </div>
                    </div>
@@ -91,19 +91,19 @@
                             {{ job.jobDescription | slice:0:125 }}...	
                          </p>
                          <div class="cardButtons ">
-                            <a class="btn btn-primary " *ngIf="job.jobStatus=='In Progress' " (click)="manageJob(job.id, job.acceptedBidId)" href>Manage</a> 
-                            <a class="btn btn-primary " *ngIf="job.jobStatus=='Submitted' " (click)="viewListing(job.id) " href>View</a> 
-                            <a class="btn btn-default " *ngIf="job.jobStatus=='Submitted' " (click)="deleteListing(job.id) " ng-confirm-click="You
+                            <a class="btn btn-primary " *ngIf="job.jobStatus=='In Progress' " (click)="manageJob(job._id)" href>Manage</a> 
+                            <a class="btn btn-primary " *ngIf="job.jobStatus=='Submitted' " (click)="viewListing(job._id) " href>View</a> 
+                            <a class="btn btn-default " *ngIf="job.jobStatus=='Submitted' " (click)="deleteListing(job._id) " ng-confirm-click="You
                                are about to delete your listing! Are you sure you want to do this? " href>Delete</a>
                          </div>
                       </div>
                    </div>
                 </div>
              </div>
-             <button class="left carousel-control paginationButton" [disabled]="requestorPage==0" ng-hide="requestedJobs.length<=pSize" ng-class="{'disabledButton': requestorPage==0}" (click)="requestorPage=requestorPage-1 ">
+             <button class="left carousel-control paginationButton" [disabled]="requestorPage==0" *ngIf="requestedJobs.length>pSize" ng-class="{'disabledButton': requestorPage==0}" (click)="requestorPage=requestorPage-1 ">
                  <span class="glyphicon glyphicon-chevron-left arrowButtons"></span>
              </button>
-             <button class="right carousel-control paginationButton" [disabled]="requestorPage>= requestedJobs.length/pSize - 1" ng-hide="requestedJobs.length<=pSize" ng-class="{'disabledButton': requestorPage>= requestedJobs.length/pSize - 1}" (click)="requestorPage=requestorPage+1">
+             <button class="right carousel-control paginationButton" [disabled]="requestorPage>= requestedJobs.length/pSize - 1" *ngIf="requestedJobs.length>pSize" ng-class="{'disabledButton': requestorPage>= requestedJobs.length/pSize - 1}" (click)="requestorPage=requestorPage+1">
                     <span class="glyphicon glyphicon-chevron-right arrowButtons"></span>
              </button>
           </div>
@@ -111,20 +111,20 @@
              <button class="btn btn-primary btn-lg " id="newJobBtn " (click)="newListing() " *ngIf="loggedIn ">Create New Listing</button>
           </div>
        </div>
-       <div class="row" ng-hide="receivedProviderReviews.length==0">
+       <div class="row" *ngIf="receivedProviderReviews.length>0">
           <div class="col-md-12">
             <h2>Reviews for Jobs You've Completed</h2>
-                   <div class="col-md-4 col-sm-6" *ngFor="review in receivedProviderReviews | slice:0:pSize">
+                   <div class="col-md-4 col-sm-6" *ngFor="let review of receivedProviderReviews | slice:0:pSize">
                       <div class="block-text rel zmin">
-                         <a (click)="viewListing(review.reviewedJobId)">{{ review.jobReview.jobTitle }}</a>
-                         <div class="mark"><star-rating ng-model="review.reviewRating" readonly="isRatingReadonly"></star-rating>
+                         <a (click)="viewListing(review.completedJobId)">{{ review.job.jobTitle }}</a>
+                         <div class="mark"><!--<star-rating ng-model="review.reviewRating" readonly="isRatingReadonly"></star-rating>-->
                          </div>
                          <p> {{ review.reviewComments }} </p>
                       </div>
                       <div class="person-text">
-                        <img alt="User Avatar" [src]="review.jobProvider?.profilePic || '/assets/images/default_avatar.png'" class="img-circle requestorAvatar" />
-                         <a title="" href="#" (click)="viewUser(review.submittedReviews.id)">{{ review.submittedReviews.userFullName }}</a>
-                         <i>{{ review.reviewDate | timeAgo:'MM/dd/yyyy' }}</i>
+                        <img alt="User Avatar" [src]="review.jobRequestor?.profilePic || '/assets/images/default_avatar.png'" class="img-circle requestorAvatar" />
+                         <a title="" href="#" (click)="viewUser(review.jobRequestor?._id)">{{ review.jobRequestor?.userFullName }}</a>
+                         <i>{{ review.reviewDate | timeAgo }}</i>
                       </div>
                    </div>
              <button class="left carousel-control paginationButton" [disabled]="receivedProviderPage==0" ng-hide="receivedProviderReviews.length<=pSize" ng-class="{'disabledButton': receivedProviderPage==0}" (click)="receivedProviderPage=receivedProviderPage-1 ">
@@ -135,20 +135,20 @@
              </button>
           </div>
        </div>
-       <div class="row" ng-hide="receivedRequestorReviews.length==0">
+       <div class="row" *ngIf="receivedRequestorReviews.length>0">
           <div class="col-md-12">
             <h2>Reviews for Jobs You've Posted</h2>
-                   <div class="col-md-4 col-sm-6" ng-repeat="review in receivedRequestorReviews | startFrom:receivedRequestorPage*pSize | limitTo:pSize">
+                   <div class="col-md-4 col-sm-6" *ngFor="let review of receivedRequestorReviews | slice:0:pSize">
                       <div class="block-text rel zmin">
-                         <a [routerLink]="'/job/' + review.job._id">{{ review.jobReview.jobTitle }}</a>
-                         <div class="mark"><star-rating ng-model="review.reviewRating" readonly="isRatingReadonly"></star-rating>
+                         <a [routerLink]="'/job/' + review.job._id">{{ review.job.jobTitle }}</a>
+                         <div class="mark"><!--<star-rating ng-model="review.reviewRating" readonly="isRatingReadonly"></star-rating>-->
                          </div>
                          <p> {{ review.reviewComments }} </p>
                       </div>
                       <div class="person-text">
                         <img alt="User Avatar" [src]="review.jobProvider?.profilePic || '/assets/images/default_avatar.png'" class="img-circle requestorAvatar" />
-                         <a title="" href="#" (click)="viewUser(review.submittedReviews.id)">{{ review.submittedReviews.userFullName }}</a>
-                         <i>{{ review.reviewDate | timeAgo:'MM/dd/yyyy' }}</i>
+                         <a title="" href="#" (click)="viewUser(review.jobProvider?._id)">{{ review.jobProvider?.userFullName }}</a>
+                         <i>{{ review.reviewDate | timeAgo }}</i>
                       </div>
                    </div>
              <button class="left carousel-control paginationButton" [disabled]="receivedRequestorPage==0" ng-hide="receivedRequestorReviews.length<=pSize" ng-class="{'disabledButton': receivedRequestorPage==0}" (click)="receivedRequestorPage=receivedRequestorPage-1 ">
